@@ -188,7 +188,12 @@ class CacheStore {
       try {
         await file.delete();
       } catch (exc) {
-        if (!exc.toString().contains('PathNotFoundException')) {
+        // Test message since min target SDK 2.1.17 doesn't support this class being referenced
+        if (exc.toString().contains("PathNotFoundException")) {
+          cacheLogger.log(
+              'CacheStore: Failed to delete file. Path not found: ${exc.message}',
+              CacheManagerLogLevel.verbose);
+        } else {
           rethrow;
         }
       }
