@@ -191,7 +191,7 @@ class CacheStore {
         // Test message since min target SDK 2.1.17 doesn't support this class being referenced
         if (exc.toString().contains("PathNotFoundException")) {
           cacheLogger.log(
-              'CacheStore: Failed to delete file. Path not found: ${exc.message}',
+              'CacheStore: Failed to delete file. Path not found: ${exc.toString()}',
               CacheManagerLogLevel.verbose);
         } else {
           rethrow;
