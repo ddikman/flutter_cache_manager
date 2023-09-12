@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_cache_manager/src/storage/cache_object.dart';
@@ -184,7 +185,13 @@ class CacheStore {
     }
     final file = await fileSystem.createFile(cacheObject.relativePath);
     if (await file.exists()) {
-      await file.delete();
+      try {
+        await file.delete();
+      } catch (exc) {
+        if (!exc.toString().contains('PathNotFoundException')) {
+          rethrow;
+        }
+      }
     }
   }
 
